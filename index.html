@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Add styles made with Mapbox Studio to a Leaflet map</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div id='map'></div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoicmV4dHNhaXFpeWkiLCJhIjoiY2trbDF5bGFoMDNxejJwcnIwaTJiZGQ0cSJ9.yOz5JUClaJJrPgdOthH8vg';
+
+
+var traffic =L.tileLayer(
+              'https://api.mapbox.com/styles/v1/rextsaiqiyi/cklygn0ln11aw17mx8r47mfc9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+                  tileSize: 512,
+                  zoomOffset: -1,
+                  attribution: '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              }),
+    basemap = L.tileLayer(
+              'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+                  tileSize: 512,
+                  zoomOffset: -1,
+                  attribution: '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              });
+
+var map = L.map('map', {center:[51.05011, -114.08529], zoom:10, layers:[basemap]});
+
+var layermaps={
+  "Traffic Incidents": traffic,
+  "Basemap": basemap
+};
+
+L.control.layers(layermaps).addTo(map);
+</script>
+</body>
+</html>
